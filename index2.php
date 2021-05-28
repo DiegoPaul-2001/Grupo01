@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-</head>
+    <link rel="stylesheet" type="text/css" href="css/estilo.css"></head>
 
 <body>
     <div class="container">
@@ -36,25 +35,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="POST">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="username">
+                            <input type="text" class="form-control" placeholder="username" name="usuario">
 
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" placeholder="password">
+                            <input type="password" class="form-control" placeholder="password" name="contraseña">
                         </div>
                         <div class="row align-items-center remember">
                             <input type="checkbox">Remember Me
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                            <input type="submit" value="Login" class="btn float-right login_btn" name="entrar">
                         </div>
                     </form>
                 </div>
@@ -72,3 +71,28 @@
 </body>
 
 </html>
+<?php
+
+include("php/funciones.php");
+	$conexion = conexion();
+	echo "CONEXION SATISFACTORIA";
+
+	if (isset($_POST['entrar'])) {
+	$usuario = $_POST['usuario'];
+	$contraseña = $_POST['contraseña'];
+
+	$ver = buscar($usuario,$contraseña);
+	session_start();
+	$_SESSION['usu'] = $usuario;
+
+	if ($ver>0) {
+		header('Location: inicio.php');
+	}else{
+		echo '<script>alert("USUARIO O CONTRASEÑA INCORRECTA VERIFIQUE...");</script>';
+		
+	}
+	}
+
+
+
+?>
